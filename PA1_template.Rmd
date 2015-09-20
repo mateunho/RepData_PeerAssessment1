@@ -1,25 +1,50 @@
 ---
 title: "Reproducible Research: Peer Assessment 1"
 output: 
-  html_document:
-    keep_md: true
+html_document:
+keep_md: true
 ---
 
 
 ## Loading and preprocessing the data
-
+```{r}
+unzip(zipfile = "activity.zip", exdir = "data")
+activity = read.csv(file = "data/activity.csv")
+```
 
 
 ## What is mean total number of steps taken per day?
-
+```{r}
+steps.per.day = split(x = activity, f = activity$date)
+total.steps.per.day = vector(mode = "integer")
+for (i in steps.per.day) {
+    total.steps.per.day = c(total.steps.per.day, sum(i$steps, na.rm = T))
+}
+hist(total.steps.per.day, breaks = 20)
+mean(total.steps.per.day)
+median(total.steps.per.day)
+```
 
 
 ## What is the average daily activity pattern?
-
+```{r}
+steps.per.itval = split(x = activity, f = activity$interval)
+df.steps.per.itval = data.frame()
+for (i in steps.per.itval) {
+    df.steps.per.itval = rbind(df.steps.per.itval,
+                               c(mean(i$steps, na.rm = T), i$interval[1]))
+}
+colnames(df.steps.per.itval) = c("mean", "id")
+library(ggplot2)
+qplot(df.steps.per.itval$id, df.steps.per.itval$mean, geom = "line")
+with(df.steps.per.itval, subset(id, mean == max(mean)))
+```
 
 
 ## Imputing missing values
-
+```{r}
+sum(is.na(activity$steps))
+```
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
