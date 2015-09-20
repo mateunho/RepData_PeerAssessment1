@@ -123,11 +123,6 @@ These values significantly differ from the estimates from the firts part of the 
 Imputing missing data on the estimates of the total number of steps changes the perception of dataset.
 
 ## Are there differences in activity patterns between weekdays and weekends?
-There can be seen differences in activity patterns between weekdays and weekends.
-
-- on **weekdays** there is more activity in the early hours
-
-- on **weekends** there is more activity through the midday to the evening
 
 ```r
 makeWeeklyDataset = function(data) {
@@ -160,3 +155,9 @@ qplot(id, mean, data = filled.week,
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-6-1.png) 
+
+There can be seen differences in activity patterns between weekdays and weekends.
+
+- on **weekdays** there is more activity in the early hours
+
+- on **weekends** there is more activity through the midday to the evening
